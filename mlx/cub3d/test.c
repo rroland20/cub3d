@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:08:49 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/14 17:26:30 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/18 20:33:57 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,37 +131,47 @@ int main(int argc, char **argv)
 	zeroing(cub);
 	if (argc == 2)
 	{
-		// int i;
+		int i;
+		int sum;
 
-		// kall = 25;
- 		// kall_2 = 0;
-    	// cub->x = 100;
-    	// cub->y = 100;
-		// cub->mlx = mlx_init();
+		sum = 0;
+		kall = 25;
+ 		kall_2 = 0;
+    	cub->x = 100;
+    	cub->y = 100;
+		cub->mlx = mlx_init();
 		cub->fd = open(argv[1], O_RDONLY);
 		while(get_next_line(cub->fd, &cub->line) == 1)
 		{
-			valid = parser_gnl(cub, cub->line);
-			if (valid == -1)
+			if (sum != 8)
 			{
-				printf("Error valid\n");
-				exit(1);
+				valid = parser_gnl(cub, cub->line);
+				if (valid == -1)
+				{
+					printf("Error valid\n");
+					exit(1);
+				}
+				else	
+					sum = valid + sum;
+				printf("%d\n", sum);
 			}
-			else	
-				printf("OK\n");
+			else
+			{
+
+			}
 			free(cub->line);
 		}
 		
-    	// cub->mlx_win = mlx_new_window(cub->mlx, cub->width, cub->height, "cub3D");
-    	// cub->img = mlx_new_image(cub->mlx, cub->width, cub->height);
-    	// cub->img_addr = mlx_get_data_addr(cub->img, &(cub->bpp), &(cub->size_line), &i);
-    	// mlx_hook(cub->mlx_win, 2, 1L << 0, key_press, cub);
-    	// mlx_hook(cub->mlx_win, 3, 1L << 1, key_wringing_out, cub);
-    	// mlx_hook(cub->mlx_win, 17, 1L << 17, exita, cub);
-		// mlx_key_hook(cub->mlx_win, key_hook, cub);
-    	// mlx_loop_hook(cub->mlx, do_some_shit, cub);
-    	// mlx_loop(cub->mlx);
-		// close(cub->fd);
+    	cub->mlx_win = mlx_new_window(cub->mlx, cub->width, cub->height, "cub3D");
+    	cub->img = mlx_new_image(cub->mlx, cub->width, cub->height);
+    	cub->img_addr = mlx_get_data_addr(cub->img, &(cub->bpp), &(cub->size_line), &i);
+    	mlx_hook(cub->mlx_win, 2, 1L << 0, key_press, cub);
+    	mlx_hook(cub->mlx_win, 3, 1L << 1, key_wringing_out, cub);
+    	mlx_hook(cub->mlx_win, 17, 1L << 17, exita, cub);
+		mlx_key_hook(cub->mlx_win, key_hook, cub);
+    	mlx_loop_hook(cub->mlx, do_some_shit, cub);
+    	mlx_loop(cub->mlx);
+		close(cub->fd);
 	}
 	else if (argc == 1)
 	{

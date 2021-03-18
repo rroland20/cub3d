@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 15:27:43 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/14 19:09:12 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/18 20:57:49 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@
 # include <math.h>
 # include <fcntl.h>
 
+typedef struct	s_color_fc
+{
+	int			red;
+	int			green;
+	int			blue;
+}				t_color_fc;
+
+typedef struct s_texture
+{
+	char		*tex;
+}				t_texture;
+
+
 typedef struct	s_cub
 {
     void		*mlx;
@@ -39,12 +52,14 @@ typedef struct	s_cub
     int			y;
     int         width;
     int         height;
-	int			f_red;
-	int			f_green;
-	int			f_blue;
-	int			c_red;
-	int			c_green;
-	int			c_blue;
+	t_color_fc	floor;
+	t_color_fc	ceil;
+	t_texture	tx_no;
+	t_texture	tx_so;
+	t_texture	tx_we;
+	t_texture	tx_ea;
+	t_texture	tx_sprite;
+
 }               t_cub;
 
 int		get_next_line(int fd, char **line);
@@ -63,11 +78,10 @@ size_t	ft_strlen(const char *c);
 int		ft_atoi(const char *str, int *i);
 int		pars_resolution(t_cub *cub, char *line, int i);
 int		parser_gnl(t_cub *cub, char *line);
-int		pars_floor(t_cub *cub, char *line, int i);
-int		pars_ceilling(t_cub *cub, char *line, int i);
+int		pars_fc(t_color_fc *col, char *line, int i);
 void	skip_spaces(char *line, int *i);
 void	zeroing(t_cub *cub);
 void	check_pars(int value, int *valid, char *line, int *i);
-int		pars_north(t_cub *cub, char *line, int i);
+int		pars_nswe(t_texture *tx, char *line, int i);
 
 # endif

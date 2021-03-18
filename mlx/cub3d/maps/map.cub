@@ -1,11 +1,18 @@
-  R  270 12
-F 20            , 100,10  
-C   255,  30,  30
-  NO!/p.xpm
-SO ./path_to_the_south_texture
-EA ./path_to_the_east_texture
- WE ./path_to_the_west_texture
-S ./path_to_the_sprite_texture
+R  1200 1200
+F 207           , 100,10  
+C 200,  30,  30
+
+NO /p.xpm
+SO ./path_to_the_south_texture.xpm
+EA ./path_to_the_east_texture.xpm
+ WE ./path_to_the_west_texture.xpm
+S ./path_to_the_sprite_texture.xpm
+
+
+
+
+
+
 		1111111111111111111111111
 		1000000000110000000000001
 		1011000001110000002000001
