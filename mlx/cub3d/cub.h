@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 15:27:43 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/18 20:57:49 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/20 17:19:05 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
+
+typedef struct		s_map
+{
+	char			*content;
+	struct s_map	*next;
+}					t_map;
 
 typedef struct	s_color_fc
 {
@@ -52,6 +58,7 @@ typedef struct	s_cub
     int			y;
     int         width;
     int         height;
+	char		**my_map;
 	t_color_fc	floor;
 	t_color_fc	ceil;
 	t_texture	tx_no;
@@ -59,7 +66,6 @@ typedef struct	s_cub
 	t_texture	tx_we;
 	t_texture	tx_ea;
 	t_texture	tx_sprite;
-
 }               t_cub;
 
 int		get_next_line(int fd, char **line);
@@ -83,5 +89,12 @@ void	skip_spaces(char *line, int *i);
 void	zeroing(t_cub *cub);
 void	check_pars(int value, int *valid, char *line, int *i);
 int		pars_nswe(t_texture *tx, char *line, int i);
+int 	pars_map(t_map **map, char *line);
+t_map	*ft_lstnew(char *content);
+void	ft_lstadd_back(t_map **lst, t_map *new);
+t_map	*ft_lstlast(t_map *lst);
+int		ft_lstsize(t_map *lst);
+void	free_one_list(t_map **map);
+int		pars_nul(t_cub *cub, int tmp, int i, int tmp_2);
 
 # endif

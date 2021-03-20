@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:08:49 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/18 20:33:57 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/20 18:39:17 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ int     key_press(int key, t_cub *cub)
 int     key_wringing_out(int key, t_cub *cub)
 {
     cub->x += 0;
-    printf("%d\n", key);
-    return(0);
+    return(key);
 }
 
 int exita(int k)
 {
-    k = 0;
     exit(0);
-    return (0);
+    return (k);
 }
 
 int kall;
@@ -113,26 +111,32 @@ int do_some_shit(t_cub *cub)
     return (0);
 }
 
-int             key_hook(int keycode, t_cub *cub)
+void free_one_list(t_map **map)
 {
-	keycode = 0;
-	cub = 0;
-    printf("Hello from key_hook!\n");
-	return (0);
+	t_map *tmp;
+
+	tmp = *map;
+	*map = (*map)->next;
+	free(tmp->content);
+	free(tmp);
 }
 
 int main(int argc, char **argv)
 {
+	int i;
 	t_cub *cub;
-	
+	t_map *map;
+	int tmp;
+	int sum;
 	int valid;
 
     cub = malloc(sizeof(t_cub));
+	map = 0;
+	i = 0;
 	zeroing(cub);
 	if (argc == 2)
 	{
-		int i;
-		int sum;
+		int k;
 
 		sum = 0;
 		kall = 25;
@@ -143,7 +147,7 @@ int main(int argc, char **argv)
 		cub->fd = open(argv[1], O_RDONLY);
 		while(get_next_line(cub->fd, &cub->line) == 1)
 		{
-			if (sum != 8)
+			if (sum < 8)
 			{
 				valid = parser_gnl(cub, cub->line);
 				if (valid == -1)
@@ -153,29 +157,73 @@ int main(int argc, char **argv)
 				}
 				else	
 					sum = valid + sum;
-				printf("%d\n", sum);
+				// printf("%d\n", sum);
 			}
 			else
 			{
-
+				valid = pars_map(&map, cub->line);
+				if (valid == -1)
+				{
+					printf("Error valid\n");
+					exit(1);
+				}
 			}
 			free(cub->line);
 		}
-		
+		valid = pars_map(&map, cub->line);
+		free(cub->line);
+		tmp = ft_lstsize(map);
+		cub->my_map = malloc(sizeof(char *) * (tmp + 1));
+		cub->my_map[tmp] = 0;
+		int tmp_2;
+		tmp_2 = tmp;
+		tmp = 0;
+		while(tmp != tmp_2)
+		{
+			cub->my_map[tmp] = ft_strdup(map->content);
+			free_one_list(&map);
+			tmp++;
+		}
+		tmp = 0;
+			printf("%d\n", tmp_2);
+		while (tmp != tmp_2)
+		{
+			i = 0;
+			// printf("OK\n");
+			while (cub->my_map[tmp][i] != '\0')
+			{
+				if (cub->my_map[tmp][i] == '1')
+					i++;
+				if (cub->my_map[tmp][i] == '0')
+				{
+					// printf("OK!\n");
+					valid = pars_nul(cub, tmp, i, tmp_2);
+					i++;
+				}
+			}
+			tmp++;
+		}
+		if (valid == 1)
+			printf("OKi\n");
+		// while(cub->my_map[tmp] != 0)
+		// {
+		// 	printf("%s\n", cub->my_map[tmp]);
+		// 	tmp++;
+		// }
+		// printf("%d\n", tmp);
     	cub->mlx_win = mlx_new_window(cub->mlx, cub->width, cub->height, "cub3D");
     	cub->img = mlx_new_image(cub->mlx, cub->width, cub->height);
-    	cub->img_addr = mlx_get_data_addr(cub->img, &(cub->bpp), &(cub->size_line), &i);
+    	cub->img_addr = mlx_get_data_addr(cub->img, &(cub->bpp), &(cub->size_line), &k);
     	mlx_hook(cub->mlx_win, 2, 1L << 0, key_press, cub);
     	mlx_hook(cub->mlx_win, 3, 1L << 1, key_wringing_out, cub);
     	mlx_hook(cub->mlx_win, 17, 1L << 17, exita, cub);
-		mlx_key_hook(cub->mlx_win, key_hook, cub);
     	mlx_loop_hook(cub->mlx, do_some_shit, cub);
     	mlx_loop(cub->mlx);
 		close(cub->fd);
 	}
 	else if (argc == 1)
 	{
-    	int i;
+    	int k;
     	
  		kall = 25;
  		kall_2 = 0;
@@ -184,11 +232,10 @@ int main(int argc, char **argv)
     	cub->mlx = mlx_init();
     	cub->mlx_win = mlx_new_window(cub->mlx, 2560, 1395, "cub3D");
     	cub->img = mlx_new_image(cub->mlx, 2560, 1395);
-    	cub->img_addr = mlx_get_data_addr(cub->img, &(cub->bpp), &(cub->size_line), &i);
+    	cub->img_addr = mlx_get_data_addr(cub->img, &(cub->bpp), &(cub->size_line), &k);
     	mlx_hook(cub->mlx_win, 2, 1L << 0, key_press, cub);
     	mlx_hook(cub->mlx_win, 3, 1L << 1, key_wringing_out, cub);
     	mlx_hook(cub->mlx_win, 17, 1L << 17, exita, cub);
-		mlx_key_hook(cub->mlx_win, key_hook, cub);
     	mlx_loop_hook(cub->mlx, do_some_shit, cub);
 		printf("%d %d %d %d\n", cub->x, cub->y, cub->width, cub->height);
     	mlx_loop(cub->mlx);

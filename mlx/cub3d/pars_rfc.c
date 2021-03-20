@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 17:50:47 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/18 20:48:32 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/19 13:48:50 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,23 @@
 
 int		pars_resolution(t_cub *cub, char *line, int i)
 {
+	int valid;
+
+	valid = 1;
 	i++;
+	if (cub->width != -1 || cub->height != -1)
+		valid = -1;
 	if ((cub->width = ft_atoi(line, &i)) == -1 || cub->width > 2560 ||
 		(cub->height = ft_atoi(line, &i)) == -1 || cub->height > 1440)
-	{
-		printf("Error resolution\n");
-		exit(1);
-	}
+		valid = -1;
 	while (line[i] != '\0')
 	{
 		if (line[i] != ' ')
-		{
-			printf("Error resolution\n");
-			exit(1);
-		}
+			valid = -1;
 		i++;
 	}
 	// printf("%d %d\n", cub->width, cub->height);
-	return (1);
+	return (valid);
 }
 
 void	check_pars(int value, int *valid, char *line, int *i)
