@@ -9,7 +9,11 @@ SO      ./path_to_t he_south_texture.xpm
 EA ./path_to_the_east_texture.xpm
  WE ./path_to_the_west_texture.xpm
 S ./path_to_the_sprite_texture.xpm
-1111
-1001
-1001
-1111
+1111111111
+1000000001
+1000000001
+1000000001
+1000000001
+1111011111
+1111111111
+

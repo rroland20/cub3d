@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:46:40 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/20 18:39:08 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/21 19:51:16 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int pars_map(t_map **map, char *line)
 	i = 0;
 	valid = 0;
 	if (line[i] == '\0')
-		valid = -1;
+		valid = 1;
 	while (line[i] != '\0')
 	{
 		if((line[i] != ' ') && (line[i] != '1') && (line[i] != '0')
@@ -41,7 +41,7 @@ int pars_nul(t_cub *cub, int tmp, int i, int tmp_2)
 	int save;
 	int tt;
 	int ii;
-tmp_2 = 0;
+	
 	valid = -1;
 	save = i;
 	tt = tmp;
@@ -49,28 +49,44 @@ tmp_2 = 0;
 	while (cub->my_map[tmp][i] != '\0')
 	{
 		if (cub->my_map[tmp][i] == '1')
+		{
 			valid = 1;
+			break ;
+		}
 		i++;
-		printf("%d\n", i);
 	}
-	while (save != 0)
+	while (save != -1)
 	{
 		if (cub->my_map[tmp][save] == '1')
-			valid = 1;
+		{
+			valid = valid + 1;
+			break ;
+		}
 		save--;
 	}
-	// while (tmp != tmp_2)
-	// {
-	// 	if (cub->my_map[tmp][ii] == '1')
-	// 		valid = 1;
-	// 	tmp++;
-	// }
-	// while (tt != 0)
-	// {
-	// 	if (cub->my_map[tt][ii] == '1')
-	// 		valid = 1;
-	// 	tmp--;
-	// }
+	while (tmp != tmp_2)
+	{
+		if (cub->my_map[tmp][ii] == '1')
+		{
+			valid = valid + 1;
+			break ;
+		}
+		tmp++;
+	}
+	while (tt != -1)
+	{
+		if (cub->my_map[tt][ii] == '1')
+		{
+			valid = valid + 1;
+			break ;
+		}
+		tt--;
+	}
+	printf("%d\n", valid);
+	if (valid == 4)
+		valid = 1;
+	else
+		valid = -1;
 	return (valid);
 }
 

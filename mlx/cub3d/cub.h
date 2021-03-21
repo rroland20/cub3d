@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 15:27:43 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/20 17:19:05 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/21 19:22:18 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ typedef struct	s_color_fc
 	int			blue;
 }				t_color_fc;
 
-typedef struct s_texture
-{
-	char		*tex;
-}				t_texture;
-
-
 typedef struct	s_cub
 {
     void		*mlx;
@@ -61,11 +55,11 @@ typedef struct	s_cub
 	char		**my_map;
 	t_color_fc	floor;
 	t_color_fc	ceil;
-	t_texture	tx_no;
-	t_texture	tx_so;
-	t_texture	tx_we;
-	t_texture	tx_ea;
-	t_texture	tx_sprite;
+	char		*tx_no;
+	char		*tx_so;
+	char		*tx_we;
+	char		*tx_ea;
+	char		*tx_sprite;
 }               t_cub;
 
 int		get_next_line(int fd, char **line);
@@ -88,7 +82,7 @@ int		pars_fc(t_color_fc *col, char *line, int i);
 void	skip_spaces(char *line, int *i);
 void	zeroing(t_cub *cub);
 void	check_pars(int value, int *valid, char *line, int *i);
-int		pars_nswe(t_texture *tx, char *line, int i);
+int pars_nswe(char *tex, char *line, int i);
 int 	pars_map(t_map **map, char *line);
 t_map	*ft_lstnew(char *content);
 void	ft_lstadd_back(t_map **lst, t_map *new);

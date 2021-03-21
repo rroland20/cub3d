@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:08:49 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/20 18:39:17 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/21 19:37:58 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,26 +185,29 @@ int main(int argc, char **argv)
 			tmp++;
 		}
 		tmp = 0;
-			printf("%d\n", tmp_2);
 		while (tmp != tmp_2)
 		{
 			i = 0;
-			// printf("OK\n");
 			while (cub->my_map[tmp][i] != '\0')
 			{
 				if (cub->my_map[tmp][i] == '1')
 					i++;
 				if (cub->my_map[tmp][i] == '0')
 				{
-					// printf("OK!\n");
 					valid = pars_nul(cub, tmp, i, tmp_2);
 					i++;
+				}
+				if (valid == 1)
+					printf("OKi\n");
+				else if (valid == -1)
+				{
+					printf("steni net\n");
+					exit (1);
 				}
 			}
 			tmp++;
 		}
-		if (valid == 1)
-			printf("OKi\n");
+		
 		// while(cub->my_map[tmp] != 0)
 		// {
 		// 	printf("%s\n", cub->my_map[tmp]);

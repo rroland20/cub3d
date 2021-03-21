@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 13:48:19 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/18 20:58:21 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/21 19:45:45 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void zeroing(t_cub *cub)
 	cub->ceil.red = -1;
 	cub->ceil.green = -1;
 	cub->ceil.blue = -1;
-	cub->tx_no.tex = 0;
-	cub->tx_so.tex = 0;
-	cub->tx_we.tex = 0;
-	cub->tx_ea.tex = 0;
-	cub->tx_sprite.tex = 0;
+	cub->tx_no = 0;
+	cub->tx_so = 0;
+	cub->tx_we = 0;
+	cub->tx_ea = 0;
+	cub->tx_sprite = 0;
 }
 
 void skip_spaces(char *line, int *i)
@@ -50,15 +50,15 @@ int parser_gnl(t_cub *cub, char *line)
 	else if (line[i] == '\0')
 		valid = 0;
 	else if (line[i] == 'N' && line[i + 1] == 'O')
-		valid = pars_nswe(&(cub->tx_no), line, i);
+		valid = pars_nswe(cub->tx_no, line, i);
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		valid = pars_nswe(&(cub->tx_so), line, i);
+		valid = pars_nswe(cub->tx_so, line, i);
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		valid = pars_nswe(&(cub->tx_we), line, i);
+		valid = pars_nswe(cub->tx_we, line, i);
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		valid = pars_nswe(&(cub->tx_ea), line, i);
+		valid = pars_nswe(cub->tx_ea, line, i);
 	else if (line[i] == 'S')
-		valid = pars_nswe(&(cub->tx_sprite), line, i);
+		valid = pars_nswe(cub->tx_sprite, line, i);
 	else if (line[i] == 'F')
 		valid = pars_fc(&(cub->floor), &line[i], i);
 	else if (line[i] == 'C')
@@ -71,7 +71,7 @@ int parser_gnl(t_cub *cub, char *line)
 	return(valid);
 }
 
-int pars_nswe(t_texture *tx, char *line, int i)
+int pars_nswe(char *tex, char *line, int i)
 {
 	int valid;
 	int j;
@@ -80,16 +80,12 @@ int pars_nswe(t_texture *tx, char *line, int i)
 	i += 2;
 	j = 0;
 	skip_spaces(line, &i);
-	if (tx->tex != 0)
-	{	
+	if (tex != 0)	
 		valid = -1;
-		printf("dsf\n");
-	}
-	tx->tex = ft_strdup(&line[i]);
-	j = ft_strlen(tx->tex);
-	if (tx->tex[j - 4] != '.' || tx->tex[j - 3] != 'x' ||
-	tx->tex[j - 2] != 'p' || tx->tex[j- 1] != 'm')
+	tex = ft_strdup(&line[i]);
+	j = ft_strlen(tex);
+	if (tex[j - 4] != '.' || tex[j - 3] != 'x' ||
+	tex[j - 2] != 'p' || tex[j- 1] != 'm')
 			valid = -1;
-	// printf("%s\n", tx->tex);
 	return (valid);
 }
