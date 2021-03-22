@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 17:50:47 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/19 13:48:50 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/22 17:32:06 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		pars_resolution(t_cub *cub, char *line, int i)
 			valid = -1;
 		i++;
 	}
-	// printf("%d %d\n", cub->width, cub->height);
 	return (valid);
 }
 
@@ -61,7 +60,6 @@ int		pars_fc(t_color_fc *col, char *line, int i)
 			i++;
 			col->blue = ft_atoi(line, &i);
 			check_pars(col->blue, &valid, line, &i);
-			// printf("%d %d %d\n", col->red, col->green, col->blue);
 		}
 	}
 	else

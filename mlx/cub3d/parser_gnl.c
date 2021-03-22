@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 13:48:19 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/21 19:45:45 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/22 16:10:55 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void zeroing(t_cub *cub)
 	cub->tx_so = 0;
 	cub->tx_we = 0;
 	cub->tx_ea = 0;
+	cub->max_map_size = 0;
 	cub->tx_sprite = 0;
 }
 

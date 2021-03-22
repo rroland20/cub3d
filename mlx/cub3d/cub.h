@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 15:27:43 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/21 19:22:18 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/22 19:14:46 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct	s_cub
     void		*img;
 	char		*line;
 	int			fd;
+	int			max_map_size;
 	int			size_line;
 	char		*img_addr;
     int			bpp;
@@ -60,6 +61,7 @@ typedef struct	s_cub
 	char		*tx_we;
 	char		*tx_ea;
 	char		*tx_sprite;
+	int			check_double;
 }               t_cub;
 
 int		get_next_line(int fd, char **line);
@@ -83,12 +85,13 @@ void	skip_spaces(char *line, int *i);
 void	zeroing(t_cub *cub);
 void	check_pars(int value, int *valid, char *line, int *i);
 int pars_nswe(char *tex, char *line, int i);
-int 	pars_map(t_map **map, char *line);
+int 	pars_map(t_cub *cub, t_map **map, char *line);
 t_map	*ft_lstnew(char *content);
 void	ft_lstadd_back(t_map **lst, t_map *new);
 t_map	*ft_lstlast(t_map *lst);
 int		ft_lstsize(t_map *lst);
 void	free_one_list(t_map **map);
-int		pars_nul(t_cub *cub, int tmp, int i, int tmp_2);
+int		pars_nul(t_cub *cub, int tmp, int i);
+int 	check_wall(t_cub *cub, int tmp, int i);
 
 # endif

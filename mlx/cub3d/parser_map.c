@@ -6,19 +6,21 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:46:40 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/21 19:51:16 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/22 19:02:13 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int pars_map(t_map **map, char *line)
+int pars_map(t_cub *cub, t_map **map, char *line)
 {
 	int i;
 	int valid;
 
 	i = 0;
 	valid = 0;
+	if (line[i] == '\0' && !(*map))
+		return (1);
 	if (line[i] == '\0')
 		valid = 1;
 	while (line[i] != '\0')
@@ -29,64 +31,56 @@ int pars_map(t_map **map, char *line)
 				valid = -1;
 		i++;
 	}
-
+	if (i > cub->max_map_size)
+		cub->max_map_size = i;
 	ft_lstadd_back(map, ft_lstnew(ft_strdup(line)));
-	// printf("%s\n", map->content);
 	return (valid);
 }
 
-int pars_nul(t_cub *cub, int tmp, int i, int tmp_2)
+int check_wall(t_cub *cub, int tmp, int i)
+{
+	if (cub->my_map[tmp][i] == ' ')
+		return (-1);
+	if (cub->my_map[tmp][i] == '1')
+		return (1);
+	return (0);
+}
+
+int pars_nul(t_cub *cub, int tmp, int i)
 {
 	int valid;
-	int save;
-	int tt;
-	int ii;
+	int tmp_cpy;
+	int i_cpy;
 	
-	valid = -1;
-	save = i;
-	tt = tmp;
-	ii = i;
-	while (cub->my_map[tmp][i] != '\0')
+	valid = 0;
+	tmp_cpy = tmp;
+	i_cpy = i;
+	while (cub->my_map[tmp][i_cpy] != '\0')
 	{
-		if (cub->my_map[tmp][i] == '1')
-		{
-			valid = 1;
-			break ;
-		}
-		i++;
+		if ((valid += check_wall(cub, tmp, i_cpy)) != 0)
+			break;
+		i_cpy++;
 	}
-	while (save != -1)
+	i_cpy = i;
+	while (i_cpy != -1)
 	{
-		if (cub->my_map[tmp][save] == '1')
-		{
-			valid = valid + 1;
-			break ;
-		}
-		save--;
+		if ((valid += check_wall(cub, tmp, i_cpy)) != 1)
+			break;
+		i_cpy--;
 	}
-	while (tmp != tmp_2)
+	
+	while (cub->my_map[tmp] != 0)
 	{
-		if (cub->my_map[tmp][ii] == '1')
-		{
-			valid = valid + 1;
-			break ;
-		}
+		if ((valid += check_wall(cub, tmp, i)) != 2)
+			break;
 		tmp++;
 	}
-	while (tt != -1)
+	while (tmp_cpy != -1)
 	{
-		if (cub->my_map[tt][ii] == '1')
-		{
-			valid = valid + 1;
-			break ;
-		}
-		tt--;
+		if ((valid += check_wall(cub, tmp_cpy, i)) != 3)
+			break;
+		tmp_cpy--;
 	}
-	printf("%d\n", valid);
-	if (valid == 4)
-		valid = 1;
-	else
-		valid = -1;
 	return (valid);
 }
 

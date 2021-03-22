@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:08:49 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/21 19:37:58 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/22 19:19:40 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int     key_press(int key, t_cub *cub)
 	if (key == D)
         cub->x += 1;
     cub->x += 0;
-    printf("%d\n", key);
     return(0);
 }
 
@@ -121,6 +120,21 @@ void free_one_list(t_map **map)
 	free(tmp);
 }
 
+char *ft_strjoin_map(char *str, int num)
+{
+	char *str_new;
+
+	while (num != 0)
+	{
+		str_new = ft_strjoin(str, " ");
+		if (str)
+			free(str);
+		str = str_new;
+		num--;
+	}
+	return (str_new);
+}
+
 int main(int argc, char **argv)
 {
 	int i;
@@ -157,11 +171,10 @@ int main(int argc, char **argv)
 				}
 				else	
 					sum = valid + sum;
-				// printf("%d\n", sum);
 			}
 			else
 			{
-				valid = pars_map(&map, cub->line);
+				valid = pars_map(cub, &map, cub->line);
 				if (valid == -1)
 				{
 					printf("Error valid\n");
@@ -170,44 +183,50 @@ int main(int argc, char **argv)
 			}
 			free(cub->line);
 		}
-		valid = pars_map(&map, cub->line);
+		valid = pars_map(cub, &map, cub->line);
 		free(cub->line);
 		tmp = ft_lstsize(map);
+		sum = tmp;
 		cub->my_map = malloc(sizeof(char *) * (tmp + 1));
 		cub->my_map[tmp] = 0;
-		int tmp_2;
-		tmp_2 = tmp;
 		tmp = 0;
-		while(tmp != tmp_2)
-		{
-			cub->my_map[tmp] = ft_strdup(map->content);
+		int size_len;
+		while(tmp != sum)
+		{ 
+			size_len = ft_strlen(map->content);
+			if (size_len < cub->max_map_size)
+				cub->my_map[tmp] = ft_strjoin_map(ft_strdup(map->content), cub->max_map_size - size_len);
+			else
+				cub->my_map[tmp] = ft_strdup(map->content);
 			free_one_list(&map);
 			tmp++;
 		}
 		tmp = 0;
-		while (tmp != tmp_2)
+		cub->check_double = 0;
+		while (cub->my_map[tmp] != 0)
 		{
-			i = 0;
-			while (cub->my_map[tmp][i] != '\0')
-			{
-				if (cub->my_map[tmp][i] == '1')
-					i++;
-				if (cub->my_map[tmp][i] == '0')
+			i = -1;
+			while (cub->my_map[tmp][++i] != '\0')
+				if (cub->my_map[tmp][i] == '0' || cub->my_map[tmp][i] == 'N' ||
+				cub->my_map[tmp][i] == 'S' || cub->my_map[tmp][i] == 'W' ||
+				cub->my_map[tmp][i] == 'E' || cub->my_map[tmp][i] == '2')
 				{
-					valid = pars_nul(cub, tmp, i, tmp_2);
-					i++;
+					if (cub->my_map[tmp][i] == 'N' || cub->my_map[tmp][i] == 'S' ||
+					cub->my_map[tmp][i] == 'W' || cub->my_map[tmp][i] == 'E')
+						cub->check_double += 1;
+					if ((pars_nul(cub, tmp, i)) != 4)
+					{
+						printf("steni net\n");
+						exit(1);
+					}
 				}
-				if (valid == 1)
-					printf("OKi\n");
-				else if (valid == -1)
-				{
-					printf("steni net\n");
-					exit (1);
-				}
-			}
 			tmp++;
 		}
-		
+		if (cub->check_double != 1)
+		{
+			printf("MNOGO IGROKOV\n");
+			exit(1);
+		}
 		// while(cub->my_map[tmp] != 0)
 		// {
 		// 	printf("%s\n", cub->my_map[tmp]);
@@ -223,25 +242,6 @@ int main(int argc, char **argv)
     	mlx_loop_hook(cub->mlx, do_some_shit, cub);
     	mlx_loop(cub->mlx);
 		close(cub->fd);
-	}
-	else if (argc == 1)
-	{
-    	int k;
-    	
- 		kall = 25;
- 		kall_2 = 0;
-    	cub->x = 100;
-    	cub->y = 100;
-    	cub->mlx = mlx_init();
-    	cub->mlx_win = mlx_new_window(cub->mlx, 2560, 1395, "cub3D");
-    	cub->img = mlx_new_image(cub->mlx, 2560, 1395);
-    	cub->img_addr = mlx_get_data_addr(cub->img, &(cub->bpp), &(cub->size_line), &k);
-    	mlx_hook(cub->mlx_win, 2, 1L << 0, key_press, cub);
-    	mlx_hook(cub->mlx_win, 3, 1L << 1, key_wringing_out, cub);
-    	mlx_hook(cub->mlx_win, 17, 1L << 17, exita, cub);
-    	mlx_loop_hook(cub->mlx, do_some_shit, cub);
-		printf("%d %d %d %d\n", cub->x, cub->y, cub->width, cub->height);
-    	mlx_loop(cub->mlx);
 	}
 	return (0);
 }
