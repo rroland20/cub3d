@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 15:27:43 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/11 18:56:24 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/12 21:22:44 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ typedef struct s_cub
 	double			*dist_spr;
 	double			x_sprite;
 	double			y_sprite;
+	double			width_spr;
+	double			coll_spr;
+	int				save_bmp;
 }					t_cub;
 
 int					exita(int k);
@@ -117,19 +120,17 @@ void				error_output(int code);
 void				error_output2(int code);
 t_map				*ft_lstlast(t_map *lst);
 void				ft_putstr(const char *s);
-int					pars_texture(t_cub *cub);
 size_t				ft_strlen(const char *c);
+int					pars_texture(t_cub *cub);
+void				pars_texture1(t_cub *cub);
 t_map				*ft_lstnew(char *content);
-void				check_filename(char *argv);
 void				free_one_list(t_map **map);
-void				draw_ceil_floor(t_cub *cub);
 char				*ft_strdup(const char *str);
 int					key_press(int key, t_cub *cub);
 void				skip_spaces(char *line, int *i);
 void				locating_the_player(t_cub *cub);
 int					ft_atoi(const char *str, int *i);
 void				read_file(t_cub *cub, t_map *map);
-int					key_hook(int keycode, t_cub *cub);
 int					get_next_line(int fd, char **line);
 int					parser_gnl(t_cub *cub, char *line);
 char				*ft_strjoin_map(char *str, int num);
@@ -144,10 +145,15 @@ char				*ft_strjoin(char const *s1, char const *s2);
 int					pars_fc(t_color_fc *col, char *line, int i);
 int					pars_map(t_cub *cub, t_map **map, char *line);
 int					pars_resolution(t_cub *cub, char *line, int i);
+int					pars_nul1(t_cub *cub, int valid, int tmp, int i);
 void				draw_wall(t_cub *cub, int x, double dir, t_textures tex);
 void				check_pars(int value, int *valid, char *line, int *i);
 t_textures			side_of_the_world(t_cub *cub, double dir, double c);
 void				my_mlx_pixel_put(int x, int y,
 						unsigned int color, t_cub *cub);
+void	sort_distance(t_cub *cub, int j);
+void	draw_sprite_1(t_cub *cub, int ii, int size);
+void	draw_sprite(t_cub *cub, int j);
+unsigned int	sprite_color(t_cub *cub, t_textures tex, double y, double x);
 
 #endif

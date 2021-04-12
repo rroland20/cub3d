@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:59:19 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/10 19:58:11 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/12 18:34:05 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ void	read_map2(t_cub *cub)
 		error_output2(2);
 }
 
+static int	check_chars(char c)
+{
+	if (c == '0' || c == 'N' || c == 'S' || c == 'W'
+		|| c == 'E' || c == '2')
+		return (1);
+	return (0);
+}
+
+static int	check_chars1(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+		return (1);
+	return (0);
+}
+
 void	dop_to_while(t_cub *cub, int tmp, int i)
 {
 	cub->check_double = 0;
@@ -34,14 +49,12 @@ void	dop_to_while(t_cub *cub, int tmp, int i)
 	{
 		i = -1;
 		while (cub->my_map[tmp][++i] != '\0')
-			if (cub->my_map[tmp][i] == '0' || cub->my_map[tmp][i] == 'N'
-				|| cub->my_map[tmp][i] == 'S' || cub->my_map[tmp][i] == 'W'
-				|| cub->my_map[tmp][i] == 'E' || cub->my_map[tmp][i] == '2')
+		{
+			if (check_chars(cub->my_map[tmp][i]))
 			{
 				if (cub->my_map[tmp][i] == '2')
 					cub->count_sprite += 1;
-				if (cub->my_map[tmp][i] == 'N' || cub->my_map[tmp][i] == 'S'
-				|| cub->my_map[tmp][i] == 'W' || cub->my_map[tmp][i] == 'E')
+				if (check_chars1(cub->my_map[tmp][i]))
 				{
 					cub->x = i + 0.5;
 					cub->y = tmp + 0.5;
@@ -51,6 +64,7 @@ void	dop_to_while(t_cub *cub, int tmp, int i)
 				if ((pars_nul(cub, tmp, i)) != 4)
 					error_output(3);
 			}
+		}
 		tmp++;
 	}
 	cub->count_x = malloc(sizeof(double) * (cub->count_sprite + 1));

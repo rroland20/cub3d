@@ -6,17 +6,31 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 15:56:46 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/11 18:14:19 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/12 18:29:36 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int	pars_texture(t_cub *cub)
+void	pars_texture1(t_cub *cub)
 {
 	int	k;
 
 	k = 0;
+	cub->no.addr = mlx_get_data_addr(cub->no.tex_img, &(cub->bpp), \
+	&(cub->no.size_line), &k);
+	cub->so.addr = mlx_get_data_addr(cub->so.tex_img, &(cub->bpp), \
+	&(cub->so.size_line), &k);
+	cub->we.addr = mlx_get_data_addr(cub->we.tex_img, &(cub->bpp), \
+	&(cub->we.size_line), &k);
+	cub->ea.addr = mlx_get_data_addr(cub->ea.tex_img, &(cub->bpp), \
+	&(cub->ea.size_line), &k);
+	cub->sprite.addr = mlx_get_data_addr(cub->sprite.tex_img, &(cub->bpp), \
+	&(cub->sprite.size_line), &k);
+}
+
+int	pars_texture(t_cub *cub)
+{
 	cub->no.tex_img = mlx_xpm_file_to_image(cub->mlx, cub->no.tex, \
 	&(cub->no.width), &(cub->no.height));
 	cub->so.tex_img = mlx_xpm_file_to_image(cub->mlx, cub->so.tex, \
@@ -30,16 +44,7 @@ int	pars_texture(t_cub *cub)
 	if (!(cub->no.tex_img) || !(cub->so.tex_img) || !(cub->we.tex_img)
 		|| !(cub->ea.tex_img) || !(cub->sprite.tex_img))
 		return (-1);
-	cub->no.addr = mlx_get_data_addr(cub->no.tex_img, &(cub->bpp), \
-	&(cub->no.size_line), &k);
-	cub->so.addr = mlx_get_data_addr(cub->so.tex_img, &(cub->bpp), \
-	&(cub->so.size_line), &k);
-	cub->we.addr = mlx_get_data_addr(cub->we.tex_img, &(cub->bpp), \
-	&(cub->we.size_line), &k);
-	cub->ea.addr = mlx_get_data_addr(cub->ea.tex_img, &(cub->bpp), \
-	&(cub->ea.size_line), &k);
-	cub->sprite.addr = mlx_get_data_addr(cub->sprite.tex_img, &(cub->bpp), \
-	&(cub->sprite.size_line), &k);
+	pars_texture1(cub);
 	return (0);
 }
 

@@ -1,11 +1,11 @@
-R900 900
+R 900 900
 C 255,  170,255  
 F 0,170,255  
 
-NO textures/111.xpm
-SO textures/222.xpm
-EA textures/shrek.xpm
-WE textures/wall_we.xpm
+NO textures/club_romance/vlados.xpm
+SO textures/club_romance/maks.xpm
+EA textures/club_romance/luci.xpm
+WE textures/club_romance/malbont.xpm
 S textures/sprite.xpm
 
 

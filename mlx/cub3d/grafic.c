@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 14:54:32 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/11 19:49:29 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/12 21:30:05 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ unsigned int	wall_color(t_cub *cub, t_textures tex, int y)
 	return (color);
 }
 
-unsigned int		give_c(t_cub *cub, t_textures tex, double y, double x)
+unsigned int	sprite_color(t_cub *cub, t_textures tex, double y, double x)
 {
 	unsigned int	color;
 	color = *(unsigned int *)(tex.addr + (int)y * tex.size_line
@@ -137,127 +137,27 @@ void	draw_wall(t_cub *cub, int x, double dir, t_textures tex)
 		my_mlx_pixel_put(x, y, cub->color_floor, cub);
 }
 
-int		ft_slit_check(t_cub *cub, double dir, int i)
-{
-	t_cub test;
-	t_cub test2;
+// int		ft_slit_check(t_cub *cub, double dir, int i)
+// {
+// 	t_cub test;
+// 	t_cub test2;
 
-	if (cub->my_map[(int)cub->y_end][(int)cub->x_end] == '0')
-	{
-		test.x_end = cub->x - (cub->my_cos) * cub->c;
-		test.y_end = cub->y + (cub->my_sin) * cub->c;
-		test2.x_end = cub->x + (cub->my_cos) * cub->c;
-		test2.y_end = cub->y - (cub->my_sin) * cub->c;
-		if (cub->my_map[(int)(test.y_end)][(int)(test.x_end)] == '1'
-	&& cub->my_map[(int)(test2.y_end)][(int)(test2.x_end)] == '1')
-		{
-			//printf ("Ya Tut!\n");
-			draw_wall(cub, i, dir, side_of_the_world(cub, dir, cub->c));
-			return (0);
-		}
-	}
-	return (1);
-}
-
-void	sort_distance(t_cub *cub, int j)
-{
-	int	i;
-	int	k;
-	double	big_tmp;
-
-	i = 0;
-	while (i < j)
-	{
-		k = i;
-		while (k < j)
-		{
-			if (cub->dist_spr[i] > cub->dist_spr[k])
-			{
-				big_tmp = cub->dist_spr[i];
-				cub->dist_spr[i] = cub->dist_spr[k];
-				cub->dist_spr[k] = big_tmp;
-				big_tmp = cub->count_x[i];
-				cub->count_x[i] = cub->count_x[k];
-				cub->count_x[k] = big_tmp;
-				big_tmp = cub->count_y[i];
-				cub->count_y[i] = cub->count_y[k];
-				cub->count_y[k] = big_tmp;
-			}
-			k++;
-		}
-		i++;
-	}
-}
-
-void	draw_sprite_1(t_cub *cub, int ii, double tmp_x, int size)
-{
-	unsigned int color;
-	double max;
-	int jj;
-	double tmp_y;
-
-	max = (cub->height + size) / 2;
-	jj = (cub->height - size) / 2;
-	tmp_y = 0;
-	if (jj < 0)
-	{
-		tmp_y = (double)cub->sprite.height / (double)size * (-jj);
-		jj = 0;
-		max = cub->height;
-	}
-	while (jj < max)
-	{
-		color = give_c(cub, cub->sprite, tmp_y, tmp_x);
-		if (color != 0)
-			my_mlx_pixel_put(ii, jj, color, cub);
-		jj++;
-		tmp_y += (double)cub->sprite.height / (double)size;
-	}
-}
-void	draw_sprite(t_cub *cub, int j)
-{
-	int i;
-	double	width;
-	double	dir_spr;
-	double	coll_spr;
-	int	size;
-	int ii;
-	double tmp_x;
-
-	i = 0;
-	cub->dist_spr = malloc(sizeof(double) * (cub->count_sprite + 1));
-	while (i != cub->count_sprite)
-	{
-		cub->dist_spr[i] = sqrt((pow(cub->x - cub->count_x[i], 2)) + (pow(cub->y - cub->count_y[i], 2)));
-		i++;
-	}
-	sort_distance(cub, j);
-	width = cub->width / 2 / tan(M_PI / 6);
-	while (j--)
-	{
-		dir_spr = atan2(cub->count_y[j] - cub->y, cub->count_x[j] - cub->x) - cub->angle;
-		while (dir_spr >= 2 * M_PI)
-			dir_spr -= 2 * M_PI;
-		while (dir_spr < 0)
-			dir_spr += 2 * M_PI;	
-		size = width / (cos(dir_spr) * cub->dist_spr[j]);
-		coll_spr = (double)cub->width  / 2 + tan(dir_spr) * width - (double)size / 2;
-		if (size <= 0 || coll_spr >= cub->width)
-			continue ;
-		ii = coll_spr;
-		while (ii < coll_spr + size && ii < cub->width)
-		{
-			if (ii >= 0)
-			{
-				if (cub->dist_to_wall[ii] <= cub->dist_spr[j] && ++ii)
-					continue;
-				tmp_x = cub->sprite.width * (ii - coll_spr) / size;
-				draw_sprite_1(cub, ii, tmp_x, size);
-			}
-			ii++;
-		}
-	}
-}
+// 	if (cub->my_map[(int)cub->y_end][(int)cub->x_end] == '0')
+// 	{
+// 		test.x_end = cub->x - (cub->my_cos) * cub->c;
+// 		test.y_end = cub->y + (cub->my_sin) * cub->c;
+// 		test2.x_end = cub->x + (cub->my_cos) * cub->c;
+// 		test2.y_end = cub->y - (cub->my_sin) * cub->c;
+// 		if (cub->my_map[(int)(test.y_end)][(int)(test.x_end)] == '1'
+// 	&& cub->my_map[(int)(test2.y_end)][(int)(test2.x_end)] == '1')
+// 		{
+// 			//printf ("Ya Tut!\n");
+// 			draw_wall(cub, i, dir, side_of_the_world(cub, dir, cub->c));
+// 			return (0);
+// 		}
+// 	}
+// 	return (1);
+// }
 
 int	rendering(t_cub *cub)
 {
@@ -361,6 +261,10 @@ int	rendering(t_cub *cub)
 		i++;
 	}
 	mlx_put_image_to_window(cub->mlx, cub->mlx_win, cub->img, 0, 0);
+	if (cub->save_bmp == 1)
+	{
+		// make_screen(cub);
+	}
 	return (0);
 }
 

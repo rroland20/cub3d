@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:15:47 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/11 19:00:46 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/12 20:46:49 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ void	error_output2(int code)
 	else if (code == 2)
 	{
 		ft_putstr("Error opening file with texture\n");
+		exit(1);
+	}
+	else if (code == 3)
+	{
+		ft_putstr("Error wrong number of arguments\n");
+		exit(1);
+	}
+	else if (code == 4)
+	{
+		ft_putstr("Error opening file with map\n");
+		exit(1);
+	}
+	else if (code == 5)
+	{
+		ft_putstr("Error in screenshot creation\n");
 		exit(1);
 	}
 }
