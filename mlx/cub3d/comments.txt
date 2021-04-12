@@ -1,0 +1,31 @@
+/*
+	void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height)
+	Преобразует текстуру filename в изображение mlx, заполняет пустые поля высоты и ширины текстуры
+	возвращает адрес изображения
+	*/
+	/*
+	int mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y)
+	Закидывает созданное изображение, в ранее созданное окно, в указанные координаты х и у,
+	где win_ptr - адрес окна
+	img_ptr - адрес изображения
+	*/
+/*
+			void *mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title)
+			Создает окно, указанной шириной и высотой, и название окна
+		*/
+		/*
+			void *mlx_new_image(void *mlx_ptr, int width, int height)
+			Создает изображение, указанной шириной и высотой
+		*/
+
+		/*char *mlx_get_data_addr(void *img_ptr, int *bits_per_pixel, int *size_line, int *endian);
+		возвращает адрес памяти данного изображения(img_ptr).
+		bit per pixel - количество бит одного пикселя 
+		size_line - размер строки всего изображения
+		Изображение, это квадрат, size_line - количество пикселей в этом квадрате
+		Если квадрат 3 * 3, то size_line = 9
+		endian = хз что это, передаем адрес какого-то пустого инта
+		ГДЕ МОЖНО ИСПОЛЬЗОВАТЬ:
+		1. Создать свое изображение, с помощью mlx_new_image, и получить его адрес памяти и size_line
+		2. Открыть текстуру с помощью mlx_xpm_file_to_image, и получить его адрес памяти и size_line
+		*/

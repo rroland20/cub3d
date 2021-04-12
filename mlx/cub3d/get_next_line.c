@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 19:30:21 by rroland           #+#    #+#             */
-/*   Updated: 2021/03/10 21:03:58 by rroland          ###   ########.fr       */
+/*   Updated: 2021/03/30 15:19:07 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*recording(char *buff)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (buff[i] != 0)
@@ -29,14 +29,15 @@ char	*recording(char *buff)
 	return (0);
 }
 
-int		read_in(int fd, char **rec, char **line)
+int	read_in(int fd, char **rec, char **line)
 {
 	int		num;
 	char	*tmp;
 	char	*buff;
 
 	num = 1;
-	if (!(buff = (char *)malloc(101)))
+	buff = (char *)malloc(101);
+	if (!(buff))
 		return (-1);
 	while (num > 0)
 	{
@@ -54,7 +55,7 @@ int		read_in(int fd, char **rec, char **line)
 	return (num);
 }
 
-int		k(char *str, int num)
+int	k(char *str, int num)
 {
 	if (num == 0 && str == 0)
 		return (0);
@@ -63,14 +64,14 @@ int		k(char *str, int num)
 	return (1);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*str;
 	int			num;
 	char		*rec;
 
-	if (fd < 0 || line == 0
-	|| (num = read(fd, &num, 0) == -1))
+	num = read(fd, &num, 0);
+	if (fd < 0 || line == 0 || num == -1)
 		return (-1);
 	*line = 0;
 	rec = 0;
