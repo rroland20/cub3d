@@ -6,65 +6,43 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:43:16 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/12 20:14:13 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/14 02:46:17 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	sort_distance(t_cub *cub, int j)
+int	dop_check(t_cub *cub, double tmp_x, double tmp_y)
 {
-	int		i;
-	int		k;
-	double	big_tmp;
-
-	i = -1;
-	while (++i < j)
-	{
-		k = i;
-		while (k < j)
-		{
-			if (cub->dist_spr[i] > cub->dist_spr[k])
-			{
-				big_tmp = cub->dist_spr[i];
-				cub->dist_spr[i] = cub->dist_spr[k];
-				cub->dist_spr[k] = big_tmp;
-				big_tmp = cub->count_x[i];
-				cub->count_x[i] = cub->count_x[k];
-				cub->count_x[k] = big_tmp;
-				big_tmp = cub->count_y[i];
-				cub->count_y[i] = cub->count_y[k];
-				cub->count_y[k] = big_tmp;
-			}
-			k++;
-		}
-	}
+	return (tmp_x >= 0 && tmp_x < cub->sprite.width && tmp_y >= 0 \
+		&& tmp_y < cub->sprite.height);
 }
 
-void	draw_sprite_1(t_cub *cub, int ii, int size)
+void	draw_sprite_1(t_cub *cub, int i, int size, int j)
 {
 	unsigned int	color;
 	double			max;
-	int				jj;
 	double			tmp_y;
 	double			tmp_x;
 
-	tmp_x = cub->sprite.width * (ii - cub->coll_spr) / size;
+	tmp_x = cub->sprite.width * (i - cub->coll_spr) / size;
 	max = (cub->height + size) / 2;
-	jj = (cub->height - size) / 2;
+	j = (cub->height - size) / 2;
 	tmp_y = 0;
-	if (jj < 0)
+	if (j < 0)
 	{
-		tmp_y = (double)cub->sprite.height / (double)size * (-jj);
-		jj = 0;
+		tmp_y = (double)cub->sprite.height / (double)size * (-j);
+		j = 0;
 		max = cub->height;
 	}
-	while (jj < max)
+	while (j < max)
 	{
-		color = sprite_color(cub, cub->sprite, tmp_y, tmp_x);
+		color = 0;
+		if (dop_check(cub, tmp_y, tmp_x))
+			color = sprite_color(cub, cub->sprite, tmp_y, tmp_x);
 		if (color != 0)
-			my_mlx_pixel_put(ii, jj, color, cub);
-		jj++;
+			my_mlx_pixel_put(i, j, color, cub);
+		j++;
 		tmp_y += (double)cub->sprite.height / (double)size;
 	}
 }
@@ -74,13 +52,15 @@ static void	draw_sprite2(t_cub *cub, int j)
 	int	i;
 
 	i = 0;
-	cub->dist_spr = malloc(sizeof(double) * (cub->count_sprite + 1));
+	if (!cub->dist_spr)
+		cub->dist_spr = malloc(sizeof(double) * (cub->count_sprite + 1));
 	while (i != cub->count_sprite)
 	{
 		cub->dist_spr[i] = sqrt((pow(cub->x - cub->count_x[i], 2)) \
 		+ (pow(cub->y - cub->count_y[i], 2)));
 		i++;
 	}
+	cub->dist_spr[cub->count_sprite] = 0;
 	sort_distance(cub, j);
 	cub->width_spr = cub->width / 2 / tan(M_PI / 6);
 }
@@ -117,7 +97,7 @@ void	draw_sprite(t_cub *cub, int j)
 			{
 				if (cub->dist_to_wall[i] <= cub->dist_spr[j] && ++i)
 					continue ;
-				draw_sprite_1(cub, i, size);
+				draw_sprite_1(cub, i, size, 0);
 			}
 			i++;
 		}

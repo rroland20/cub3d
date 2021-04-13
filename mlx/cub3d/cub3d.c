@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 17:13:27 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/12 21:26:45 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/14 00:38:03 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ void	my_mlx_pixel_put(int x, int y, unsigned int color, t_cub *cub)
 		return ;
 	dst = cub->img_addr + y * cub->size_line + x * 4;
 	*(unsigned int *)dst = color;
-}
-
-void	free_one_list(t_map **map)
-{
-	t_map	*tmp;
-
-	tmp = *map;
-	*map = (*map)->next;
-	free(tmp->content);
-	free(tmp);
 }
 
 static void	check_filename(char *argv)
@@ -62,12 +52,20 @@ static void	check_save(char *argv, t_cub *cub)
 	while (i < n)
 	{
 		if (argv[i] == '\0' && save[i] == '\0')
-			break;
+			break ;
 		if (argv[i] != save[i])
 			error_output2(5);
 		i++;
 	}
 	cub->save_bmp = 1;
+}
+
+static void	call_all(t_cub *cub, t_map *map)
+{
+	read_file(cub, map);
+	cub->mlx = mlx_init();
+	read_map(cub);
+	mlx_func(cub);
 }
 
 int	main(int argc, char **argv)
@@ -83,21 +81,15 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		check_filename(argv[1]);
-		cub->mlx = mlx_init();
 		cub->fd = open(argv[1], O_RDONLY);
-		read_file(cub, map);
-		read_map(cub);
-		mlx_func(cub);
+		call_all(cub, map);
 	}
 	else if (argc == 3)
 	{
 		check_filename(argv[1]);
 		check_save(argv[2], cub);
 		cub->fd = open(argv[1], O_RDONLY);
-		read_file(cub, map);
-		cub->mlx = mlx_init();
-		read_map(cub);
-		mlx_func(cub);
+		call_all(cub, map);
 	}
 	return (0);
 }

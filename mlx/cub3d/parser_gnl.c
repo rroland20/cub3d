@@ -6,35 +6,11 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 13:48:19 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/12 21:23:10 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/14 00:27:34 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-void	zeroing(t_cub *cub)
-{
-	cub->width = -1;
-	cub->height = -1;
-	cub->floor.red = -1;
-	cub->floor.green = -1;
-	cub->floor.blue = -1;
-	cub->ceil.red = -1;
-	cub->ceil.green = -1;
-	cub->ceil.blue = -1;
-	cub->no.tex = 0;
-	cub->so.tex = 0;
-	cub->we.tex = 0;
-	cub->ea.tex = 0;
-	cub->max_map_size = 0;
-	cub->sprite.tex = 0;
-	cub->angle = 0;
-	cub->c = 0;
-	cub->my_cos = 0;
-	cub->my_sin = 0;
-	cub->count_sprite = 0;
-	cub->save_bmp = 0;
-}
 
 void	skip_spaces(char *line, int *i)
 {

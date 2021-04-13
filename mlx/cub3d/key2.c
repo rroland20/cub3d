@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:10:57 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/06 17:12:07 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/13 23:19:52 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int	key_wringing_out(int key, t_cub *cub)
 	return (0);
 }
 
-int	exita(int k)
+int	exita(t_cub *cub)
 {
+	free(cub);
 	exit(0);
-	return (k);
+	return (0);
 }

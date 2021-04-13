@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:15:47 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/12 20:46:49 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/14 00:38:52 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,59 +15,33 @@
 void	error_output2(int code)
 {
 	if (code == 1)
-	{
 		ft_putstr("Error filename\n");
-		exit(1);
-	}
 	else if (code == 2)
-	{
 		ft_putstr("Error opening file with texture\n");
-		exit(1);
-	}
 	else if (code == 3)
-	{
 		ft_putstr("Error wrong number of arguments\n");
-		exit(1);
-	}
 	else if (code == 4)
-	{
 		ft_putstr("Error opening file with map\n");
-		exit(1);
-	}
 	else if (code == 5)
-	{
 		ft_putstr("Error in screenshot creation\n");
-		exit(1);
-	}
+	else if (code == 6)
+		ft_putstr("Error opening BMP file\n");
+	exit(1);
 }
 
 void	error_output(int code)
 {
 	if (code == 1)
-	{
 		ft_putstr("Error valid parameters\n");
-		exit(1);
-	}
 	else if (code == 2)
-	{
 		ft_putstr("Error valid map\n");
-		exit(1);
-	}
 	else if (code == 3)
-	{
 		ft_putstr("Error: not closed world map\n");
-		exit(1);
-	}
 	else if (code == 4)
-	{
 		ft_putstr("Error: many players\n");
-		exit(1);
-	}
 	else if (code == 5)
-	{
 		ft_putstr("Error: no player\n");
-		exit(1);
-	}
+	exit(1);
 }
 
 void	read_file2(t_cub *cub, t_map *map)

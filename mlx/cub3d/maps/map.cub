@@ -1,11 +1,11 @@
-R 900 900
+R 900 900 
 C 255,  170,255  
 F 0,170,255  
 
-NO textures/club_romance/vlados.xpm
-SO textures/club_romance/maks.xpm
-EA textures/club_romance/luci.xpm
-WE textures/club_romance/malbont.xpm
+NOtextures/wall_so.xpm
+SO textures/wall_we.xpm
+EA textures/shrek.xpm
+WE textures/111.xpm
 S textures/sprite.xpm
 
 
@@ -17,7 +17,7 @@ S textures/sprite.xpm
 1010110000011
 1000101010001
 10000000S0001 
-1000000000001 
-1000000000001
-1000002020201   
+1200202002001 
+1020202020201
+1002202200001   
 111111111111
