@@ -1,23 +1,22 @@
-R 900 900 
-C 255,  170,255  
-F 0,170,255  
-
-NOtextures/wall_so.xpm
-SO textures/wall_we.xpm
-EA textures/shrek.xpm
-WE textures/111.xpm
-S textures/sprite.xpm
+R 900 900
+C 255,  170,255    retyu
+F 0,170,255 
+NOtextures/wall/wall_no.xpm
+SO textures/wall/wall_so.xpm
+EA textures/wall/wall_ea.xpm
+WE textures/wall/wall_we.xpm
+S textures/krinzh.xpm
 
 
 
 111111111111
-100000000011
-100010010001
+1E0000000211
+100011010001
 100001010011
 1010110000011
-1000101010001
-10000000S0001 
-1200202002001 
-1020202020201
-1002202200001   
+1000111010001
+1000000000001 
+1000000000001 
+1000000000201
+1020000000001   
 111111111111

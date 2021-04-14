@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 13:48:19 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/14 00:27:34 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/14 13:34:36 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	parser_gnl(t_cub *cub, char *line)
 
 	i = 0;
 	skip_spaces(line, &i);
-	if (line[i] == 'R')
-		return (pars_resolution(cub, &line[i], i));
-	else if (line[i] == '\0')
+	if (line[i] == '\0')
 		return (0);
+	else if (line[i] == 'R')
+		return (pars_resolution(cub, line, i));
 	else if (line[i] == 'N' && line[i + 1] == 'O')
 		return (pars_nswe(&(cub->no.tex), line, i));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
@@ -39,9 +39,9 @@ int	parser_gnl(t_cub *cub, char *line)
 	else if (line[i] == 'S')
 		return (pars_nswe(&(cub->sprite.tex), line, (i - 1)));
 	else if (line[i] == 'F')
-		return (pars_fc(&(cub->floor), &line[i], i));
+		return (pars_fc(&(cub->floor), line, i));
 	else if (line[i] == 'C')
-		return (pars_fc(&(cub->ceil), &line[i], i));
+		return (pars_fc(&(cub->ceil), line, i));
 	else
 		return (-1);
 	return (0);

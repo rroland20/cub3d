@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 17:50:47 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/07 19:06:17 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/14 20:09:50 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	pars_fc(t_color_fc *col, char *line, int i)
 			i++;
 			col->blue = ft_atoi(line, &i);
 			check_pars(col->blue, &valid, line, &i);
+			if (line[i] != '\0')
+				valid = -1;
 		}
 	}
 	else

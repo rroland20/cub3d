@@ -6,7 +6,7 @@
 #    By: rroland <rroland@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/06 14:58:27 by rroland           #+#    #+#              #
-#    Updated: 2021/04/14 02:46:00 by rroland          ###   ########.fr        #
+#    Updated: 2021/04/14 13:01:41 by rroland          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,10 @@ draw.c draw_sprite_1.c
 
 OBJECTS = $(SOURCE:.c=.o)
 
-all: $(OBJECTS)
+all: $(NAME)
+
+$(NAME): $(OBJECTS)
 	@gcc -g $(OBJECTS) -o $(NAME) ../libmlx.a -framework OpenGL -framework AppKit
-	# @rm -rf $(OBJECTS)
 %.o: %.c
 	@gcc $(FLAGS) -c $(SOURCE)
 clean:

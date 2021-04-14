@@ -6,7 +6,7 @@
 /*   By: rroland <rroland@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 15:27:43 by rroland           #+#    #+#             */
-/*   Updated: 2021/04/14 02:50:46 by rroland          ###   ########.fr       */
+/*   Updated: 2021/04/14 14:10:32 by rroland          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define LEFT 123
 # include "mlx.h"
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>

@@ -1,0 +1,27 @@
+
+
+     R 101 110 
+
+ F 240, 100, 0      
+   NO textures/wall/wall_no.xpm
+SO   textures/wall/wall_so.xpm
+        
+        C 150,    20,250  
+
+
+WE  textures/wall/wall_we.xpm
+EA  textures/wall/wall_ea.xpm
+
+S textures/wall/sprite.xpm
+
+        11111111111
+        1100000W001
+        100011000111
+111111110000100000001
+100000000002110000111
+1000000000011100111
+1000000000000000001
+1000200111111000001
+1000000000000002001
+1000000000000000001
+1111111111111111111
