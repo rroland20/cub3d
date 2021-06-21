@@ -1,0 +1,21 @@
+R 700 700
+
+C 255,10, 255
+F 0,170,2
+SO textures/wall/wall_so.xpm
+EA textures/wall/wall_ea.xpm
+WE textures/wall/wall_we.xpm
+S textures/krinzh.xpm
+NO textures/wall/wall_no.xpm
+
+111111111111
+1S0000000211
+100011010001
+100001010011
+1010110000011
+1000111010001
+1000000000001 
+1000000000001 
+1000000000201
+1020000000001   
+111111111111
